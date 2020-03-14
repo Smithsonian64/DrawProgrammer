@@ -87,7 +87,7 @@ public class DrawPanel extends JPanel implements Commands{
         endTime = System.nanoTime();
         counter += endTime - startTime;
 
-        System.out.println(System.nanoTime());
+        //System.out.println(System.nanoTime());
 
         if(counter > speed) {
             try {

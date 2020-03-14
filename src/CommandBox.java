@@ -7,7 +7,7 @@ public class CommandBox implements ActionListener {
 
     Window parent;
 
-    JDialog dialog;
+    JFrame dialog;
     JPanel dialogPanel;
     JTextPane textEntry;
     JButton executeButton;
@@ -26,7 +26,7 @@ public class CommandBox implements ActionListener {
 
     public CommandBox(Window p) {
         parent = p;
-        dialog = new JDialog(p.frame, "Commands");
+        dialog = new JFrame("Commands");
         dialog.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         dialog.setLocation(0, 0);
 
@@ -63,21 +63,22 @@ public class CommandBox implements ActionListener {
 
         if(currentToken.contains("left")) {
             parent.drawPanel.left(Integer.parseInt(commands.substring(commands.indexOf('(')+1, commands.indexOf(')'))));
+            return;
         }
         else if(currentToken.contains("right")) {
             parent.drawPanel.right(Integer.parseInt(commands.substring(commands.indexOf('(')+1, commands.indexOf(')'))));
-
+            return;
         }
         else if(currentToken.contains("up")) {
             parent.drawPanel.up(Integer.parseInt(commands.substring(commands.indexOf('(')+1, commands.indexOf(')'))));
-
+            return;
         }
         else if(currentToken.contains("down")) {
             parent.drawPanel.down(Integer.parseInt(commands.substring(commands.indexOf('(')+1, commands.indexOf(')'))));
-
+            return;
         }
 
-        parseCommands(nextSet);
+        //parseCommands(nextSet);
 
     }
 
