@@ -32,7 +32,7 @@ public class Window {
                         Window window1 = new Window();
                     }
                 });
-        long x = 1;
+        /*long x = 1;
         double n = 1;
         while(true)  {
             BufferedImage tempImage = Window.drawPanel.canvas;
@@ -40,11 +40,11 @@ public class Window {
             Window.drawPanel.penPositionX = (int)(n*1/Math.sin(n) + tempImage.getWidth()/2);
             Window.drawPanel.penPositionY = (int)(n*Math.tan(n) + tempImage.getHeight()/2);
 
-            System.out.println(x);
+
             x++;
             n += 0.00001;
 
-        }
+        }*/
 
     }
 

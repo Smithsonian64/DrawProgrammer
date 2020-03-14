@@ -1,0 +1,7 @@
+left(100)
+up(4)
+for 5 do
+    curve(20, 40, 10, 30)
+    set(90)
+    move(9)
+end

@@ -1,25 +1,90 @@
 grammar inputCommands;
 
-tokens { name }
-
-commands   :   c ommands_list
-            ;
-
-commands_list   :   command
-                |   command commands_list
+inputCommands   :   command_list
                 ;
 
-command         :   name '(' params ')'
+command_list    :   command
+                |   command command_list
                 ;
 
-params          :   param
-                |   param params
+command         :   left
+                |   right
+                |   up
+                |   down
+                |   move
+                |   set_brush_size
+                |   set_heading
+                |   for_statement
                 ;
 
-param           :   /*nothing*/
-                |   NUM
+left            :   'left(' NUM ')'
+                    {
+                        Window.drawPanel.left(Integer.parseInt($NUM.text));
+                    }
                 ;
 
-fragment NUM    :   [0-9][0-9]* ;
+right           :   'right(' NUM ')'
+                    {
+                        Window.drawPanel.right(Integer.parseInt($NUM.text));
+                    }
+                ;
 
-WHITESPACE      :   [ \t\n] -> skip;
+up              :   'up(' NUM ')'
+                    {
+                        Window.drawPanel.up(Integer.parseInt($NUM.text));
+                    }
+                ;
+
+down            :   'down(' NUM ')'
+                    {
+                        Window.drawPanel.down(Integer.parseInt($NUM.text));
+                    }
+                ;
+
+move            :   'move(' NUM ')'
+                    {
+                        Window.drawPanel.move(Integer.parseInt($NUM.text));
+                    }
+                ;
+
+set_brush_size  :   'setBrushSize(' NUM ')'
+                    {
+                        Window.drawPanel.setBrushSize(Integer.parseInt($NUM.text));
+                    }
+                ;
+
+set_heading     :   'setHeading(' NUM ')'
+                    {
+                        Window.drawPanel.setHeading(Integer.parseInt($NUM.text));
+                    }
+                ;
+
+for_statement :   FOR NUM DO command_list END
+                    {
+
+                    }
+                ;
+
+/*REGEX lexer rules*/
+
+BOOLEAN         :   'true'
+                |   'false'
+                ;
+
+FOR             :   'for'
+                ;
+
+DO              :   'do'
+                ;
+
+END             :   'end'
+                ;
+
+NUM             :   [0-9][0-9]*
+                ;
+
+ID              :   [A-Za-z][A-Za-z0-9_]*
+                ;
+
+WHITESPACE      :   [ \t\n\r] -> skip
+                ;
