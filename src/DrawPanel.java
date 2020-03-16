@@ -13,6 +13,7 @@ public class DrawPanel extends JPanel implements Commands{
     int penPositionX;
     int penPositionY;
     int brushSize;
+    double heading;
 
     static long startTime = 0;
     static long endTime = 0;
@@ -23,10 +24,11 @@ public class DrawPanel extends JPanel implements Commands{
         currentColor = Color.YELLOW;
         brushSize = 3;
         speed = 1000000;
+        heading = Math.PI/4;
         penPositionX = width/2;
         penPositionY = height/2;
         for(int i = 0; i < width; i++) {
-            for(int j = 0; j < height; j++) {
+            for (int j = 0; j < height; j++) {
                 canvas.setRGB(i, j, Color.BLACK.getRGB());
             }
         }
@@ -38,9 +40,33 @@ public class DrawPanel extends JPanel implements Commands{
 
     }
 
+
+
     public void refreshPanel(BufferedImage g) {
         canvas = g;
         this.repaint();
+    }
+
+    public void setBrushSize(int size) {
+        brushSize = size;
+    }
+
+    public void setHeading(int h) {
+        heading = h;
+    }
+
+    public void move(int n) {
+        double i = 0;
+        int tempx = penPositionX;
+        int tempy = penPositionY;
+
+        while(i < n) {
+            draw();
+            penPositionX = tempx + (int)Math.round(i*Math.cos(heading));
+            penPositionY = tempy + (int)Math.round(i*Math.sin(heading));
+            i += 1;
+        }
+
     }
 
     public void left(int n) {
@@ -87,7 +113,7 @@ public class DrawPanel extends JPanel implements Commands{
         endTime = System.nanoTime();
         counter += endTime - startTime;
 
-        System.out.println(System.nanoTime());
+        //System.out.println(System.nanoTime());
 
         if(counter > speed) {
             try {
@@ -98,6 +124,7 @@ public class DrawPanel extends JPanel implements Commands{
             }
             counter = 0;
         }
+        refreshPanel(canvas);
     }
 
 }

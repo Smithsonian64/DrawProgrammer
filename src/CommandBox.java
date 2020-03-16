@@ -1,3 +1,5 @@
+import org.antlr.v4.runtime.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,8 +9,8 @@ public class CommandBox implements ActionListener {
 
     Window parent;
 
-    JDialog dialog;
-    JPanel dialogPanel;
+    JFrame frame;
+    JPanel commandsPanel;
     JTextPane textEntry;
     JButton executeButton;
 
@@ -26,60 +28,44 @@ public class CommandBox implements ActionListener {
 
     public CommandBox(Window p) {
         parent = p;
-        dialog = new JDialog(p.frame, "Commands");
-        dialog.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        dialog.setLocation(0, 0);
+        frame = new JFrame("Commands");
+        frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        frame.setLocation(0, 0);
 
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        dialogPanel = new JPanel();
+        commandsPanel = new JPanel(new BorderLayout());
 
         textEntry = new JTextPane();
+        textEntry.setSize(200, 200);
 
         executeButton = new JButton("Execute");
         executeButton.addActionListener(this);
         executeButton.setActionCommand("Execute");
-
-        dialogPanel.add(textEntry, BorderLayout.CENTER);
-        dialogPanel.add(executeButton, BorderLayout.NORTH);
-
-        dialog.add(dialogPanel);
-
-        dialog.setAlwaysOnTop(true);
+        commandsPanel.add(textEntry, BorderLayout.CENTER);
+        commandsPanel.add(executeButton, BorderLayout.NORTH);
 
 
-        dialog.setVisible(true);
+
+        frame.add(commandsPanel);
+
+        frame.setAlwaysOnTop(true);
+
+
+        frame.setVisible(true);
     }
 
-    public void parseCommands(String commands) {
-        if(commands.trim().equals("")) return;
-        String currentToken;
-        if(!commands.contains("\n")) {
-            currentToken = commands;
-        } else {
-            currentToken = commands.substring(0, '\n');
-        }
-        String nextSet = commands.substring(commands.indexOf(';') + 1);
+    public void parseCommands(String commands) throws NullPointerException {
 
-        if(currentToken.contains("left")) {
-            parent.drawPanel.left(Integer.parseInt(commands.substring(commands.indexOf('(')+1, commands.indexOf(')'))));
-        }
-        else if(currentToken.contains("right")) {
-            parent.drawPanel.right(Integer.parseInt(commands.substring(commands.indexOf('(')+1, commands.indexOf(')'))));
+        CharStream stream = CharStreams.fromString(commands);
+        inputCommandsLexer lexer = new inputCommandsLexer(stream);
+        TokenStream tokens = new CommonTokenStream(lexer);
 
-        }
-        else if(currentToken.contains("up")) {
-            parent.drawPanel.up(Integer.parseInt(commands.substring(commands.indexOf('(')+1, commands.indexOf(')'))));
+        inputCommandsParser parser = new inputCommandsParser(tokens);
 
-        }
-        else if(currentToken.contains("down")) {
-            parent.drawPanel.down(Integer.parseInt(commands.substring(commands.indexOf('(')+1, commands.indexOf(')'))));
-
-        }
-
-        parseCommands(nextSet);
+        String tree = parser.inputCommands().toStringTree();
 
     }
 
 
-}
+    }

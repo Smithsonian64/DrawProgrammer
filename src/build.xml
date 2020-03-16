@@ -1,0 +1,35 @@
+<project name="DrawProgrammer">
+
+    <target name="clean">
+        <delete>
+            <fileset dir="../out/production/DrawProgrammer" includes="*.class"/>
+            <fileset dir="../out/production/DrawProgrammer" includes="*.interp"/>
+            <fileset dir="../out/production/DrawProgrammer" includes="*.tokens"/>
+            <fileset dir="../out/production/DrawProgrammer" includes="*.txt"/>
+        </delete>
+        <delete file="../out/production/DrawProgrammer/inputCommandsBaseListener"/>
+        <delete file="../out/production/DrawProgrammer/inputCommandsLexer"/>
+        <delete file="../out/production/DrawProgrammer/inputCommandsListener"/>
+        <delete file="../out/production/DrawProgrammer/inputCommandsParser"/>
+        <delete file="../out/production/DrawProgrammer/inputCommands.g4"/>
+    </target>
+
+    <target name="copy" depends="clean">
+        <!--<copy file="inputCommands.g4" todir="../out/production/DrawProgrammer"/>-->
+        <copy file="commands.txt" todir="../out/production/DrawProgrammer"/>
+    </target>
+
+    <target name="compile" depends="copy">
+        <exec executable="cmd">
+            <arg value="/c"/>
+            <arg line="antlr4.bat"/>
+            <arg value="-o"/>
+            <arg value="../out/production/DrawProgrammer"/>
+            <arg value="inputCommands.g4"/>
+        </exec>
+        <javac srcdir="../src"
+               destdir="../out/production/DrawProgrammer"
+               debug="on"/>
+    </target>
+
+</project>

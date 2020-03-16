@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Window {
 
@@ -9,7 +8,6 @@ public class Window {
     static final int WINDOW_HEIGHT = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
     static public DrawPanel drawPanel = new DrawPanel(WINDOW_WIDTH, WINDOW_HEIGHT);
-
 
     Window() {
         frame = new JFrame("DrawProgrammer");
@@ -32,17 +30,19 @@ public class Window {
                         Window window1 = new Window();
                     }
                 });
-
+        /*long x = 1;
         double n = 1;
         while(true)  {
             BufferedImage tempImage = Window.drawPanel.canvas;
             Window.drawPanel.draw();
-            Window.drawPanel.penPositionX = (int)(n*Math.sin(n) + tempImage.getWidth()/2);
-            Window.drawPanel.penPositionY = (int)(n*Math.cos(n) + tempImage.getHeight()/2);
+            Window.drawPanel.penPositionX = (int)(n*1/Math.sin(n) + tempImage.getWidth()/2);
+            Window.drawPanel.penPositionY = (int)(n*Math.tan(n) + tempImage.getHeight()/2);
 
-            n += 0.001;
 
-        }
+            x++;
+            n += 0.00001;
+
+        }*/
 
     }
 
